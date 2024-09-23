@@ -8,8 +8,25 @@ on:
     branches: [main]
 
 jobs:
+  build_devcontainer:
+    name: Build (Devcontainer)
+    run-on: ubuntu-latest
+    env:
+      TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
+    steps:
+      - name: Checkout Push to Registry action
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Dockerfile
+        uses: docker/build-push-action@v5
+        with:
+          context: ./devcontainer
+          load: true
+          tags: ${{ env.TAG }}
+
   build_autoconf:
-    name: Build and test
+    name: Build and test (Autoconf)
     strategy:
       fail-fast: false
       matrix:
