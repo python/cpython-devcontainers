@@ -15,9 +15,6 @@ jobs:
       matrix:
         autoconf_version: ["2.69", "2.71", "2.72"]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./autoconf
     env:
       TAG: autoconf:${{ matrix.autoconf_version }}-${{ github.run_id }}
     steps:
@@ -28,7 +25,7 @@ jobs:
       - name: Build Dockerfile
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./autoconf
           build-args: AUTOCONF_VERSION=${{ matrix.autoconf_version }}
           load: true
           tags: ${{ env.TAG }}
