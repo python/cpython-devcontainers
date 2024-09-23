@@ -24,9 +24,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Build Dockerfile
         uses: docker/build-push-action@v5
-        working-directory: ./autoconf
         with:
-          context: .
+          context: ./autoconf
           build-args: AUTOCONF_VERSION=${{ matrix.autoconf_version }}
           load: true
           tags: ${{ env.TAG }}
