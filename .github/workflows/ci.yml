@@ -10,7 +10,7 @@ on:
 jobs:
   build_devcontainer:
     name: Build (Devcontainer)
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     env:
       TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
     steps:
