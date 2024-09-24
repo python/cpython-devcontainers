@@ -1,9 +1,10 @@
 on:
   workflow_dispatch:
-    input:
+    inputs:
       package:
         description: "Package name"
         required: true
+        default: 'autoconf'
         type: choice
         options:
         - autoconf
