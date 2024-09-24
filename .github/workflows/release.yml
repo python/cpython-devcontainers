@@ -9,7 +9,7 @@ on:
         - autoconf
         - devcontainer
 
-job:
+jobs:
   release-to-ghcr:
     runs-on: ubuntu-latest
     steps:
