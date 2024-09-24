@@ -17,6 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout push-to-registry action github repository
+      - name: Set Calver Date
+        run: |
+          echo "builddate=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        id: version
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
       - name: Set up QEMU
@@ -28,7 +32,7 @@ jobs:
         with:
           registry: ghcr.io
           username: python
-          password: ${{secrets.GHCR_TOKEN}}
+          password: ${{ secrets.GHCR_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -36,4 +40,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/python/${{ inputs.package }}:latest
+            ghcr.io/python/${{ inputs.package }}:${{ steps.version.outputs.builddate }}.${{ github.run_id }}
