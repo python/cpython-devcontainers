@@ -14,6 +14,9 @@ on:
 
 jobs:
   release-to-ghcr:
+    concurrency:
+      group: release-to-ghcr-${{ inputs.package }}
+      cancel-in-progress: false
     if: contains('["brettcannon", "corona10", "erlend-aasland"]', github.actor)
     runs-on: ubuntu-latest
     steps:
