@@ -14,6 +14,7 @@ on:
 
 jobs:
   release-to-ghcr:
+    if: contains('["brettcannon", "corona10", "erlend-aasland"]', github.actor)
     runs-on: ubuntu-latest
     steps:
       # Checkout push-to-registry action github repository
