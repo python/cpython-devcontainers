@@ -23,7 +23,7 @@ jobs:
       # Checkout push-to-registry action github repository
       - name: Set Calver Date
         run: |
-          echo "builddate=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "builddate=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
         id: version
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
