@@ -42,3 +42,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/python/${{ inputs.package }}:${{ steps.version.outputs.builddate }}.${{ github.run_id }}
+            ghcr.io/python/${{ inputs.package }}:latest
