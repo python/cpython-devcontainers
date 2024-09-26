@@ -15,6 +15,7 @@ RUN apk upgrade && \
         alpine-sdk \
         autoconf \
         automake \
+        pkgconfig \
         xz
 RUN set -o pipefail \
     && curl https://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz | tar -zxf - \
