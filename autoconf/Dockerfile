@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine:3.19
+FROM docker.io/library/alpine:3.20
 
 ARG AUTOCONF_VERSION="2.71"
 ARG AUTOCONF_ARCHIVE_VERSION="2023.02.20"
@@ -12,11 +12,13 @@ LABEL org.opencontainers.image.description="Container image with GNU Autoconf ${
 
 RUN apk upgrade && \
     apk add \
+        curl \
         alpine-sdk \
         autoconf \
         automake \
         pkgconfig \
         xz
+
 RUN set -o pipefail \
     && curl https://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz | tar -zxf - \
     && cd autoconf-${AUTOCONF_VERSION} \
@@ -35,6 +37,11 @@ RUN set -o pipefail \
     && ./configure --prefix=/usr/local \
     && make \
     && make install
+
+# https://stackoverflow.com/questions/8811381/possibly-undefined-macro-ac-msg-error/49103418#49103418
+RUN set -o pipefail \
+    && cp /usr/local/share/aclocal/*.m4 /usr/share/aclocal \
+    && cp /usr/share/aclocal/*.m4 /usr/local/share/aclocal
 
 VOLUME /src
 WORKDIR /src
