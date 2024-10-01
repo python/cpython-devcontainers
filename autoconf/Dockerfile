@@ -12,12 +12,12 @@ LABEL org.opencontainers.image.description="Container image with GNU Autoconf ${
 
 RUN apt-get update && \
     apt-get -yq install \
-    autotools-dev \
-    autoconf \
-    autoconf-archive \
-    build-essential \
-    curl \
-    pkg-config
+            autotools-dev \
+            autoconf \
+            autoconf-archive \
+            build-essential \
+            curl \
+            pkg-config
 
 RUN curl https://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz | tar -zxf - \
     && cd autoconf-${AUTOCONF_VERSION} \
