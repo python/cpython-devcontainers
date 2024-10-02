@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.title="GNU Autoconf ${AUTOCONF_VERSION} container
 LABEL org.opencontainers.image.description="Container image with GNU Autoconf ${AUTOCONF_VERSION}, GNU Automake ${AUTOMAKE_VERSION}, and autoconf-archive ${AUTOCONF_ARCHIVE_VERSION} for generating CPython's configure script."
 
 RUN apt-get update && \
-    apt-get -yq install \
+    apt-get install -yq \
             autotools-dev \
             autoconf \
             autoconf-archive \
