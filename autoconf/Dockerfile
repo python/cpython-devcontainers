@@ -19,24 +19,28 @@ RUN apt-get update && \
             curl \
             pkg-config
 
-RUN curl https://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz | tar -zxf - \
+RUN set -o pipefail \
+    && curl https://ftp.gnu.org/gnu/autoconf/autoconf-${AUTOCONF_VERSION}.tar.gz | tar -zxf - \
     && cd autoconf-${AUTOCONF_VERSION} \
     && ./configure --prefix=/usr/local \
     && make \
     && make install
-RUN curl https://ftp.gnu.org/gnu/automake/automake-${AUTOMAKE_VERSION}.tar.gz | tar -xzf - \
+RUN set -o pipefail \
+    && curl https://ftp.gnu.org/gnu/automake/automake-${AUTOMAKE_VERSION}.tar.gz | tar -xzf - \
     && cd automake-${AUTOMAKE_VERSION} \
     && ./configure --prefix=/usr/local \
     && make \
     && make install
-RUN curl https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-${AUTOCONF_ARCHIVE_VERSION}.tar.xz | xz -cd - | tar -xf - \
+RUN set -o pipefail \
+    && curl https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-${AUTOCONF_ARCHIVE_VERSION}.tar.xz | xz -cd - | tar -xf - \
     && cd autoconf-archive-${AUTOCONF_ARCHIVE_VERSION} \
     && ./configure --prefix=/usr/local \
     && make \
     && make install
 
 # https://stackoverflow.com/questions/8811381/possibly-undefined-macro-ac-msg-error/49103418#49103418
-RUN cp /usr/local/share/aclocal/*.m4 /usr/share/aclocal \
+RUN set -o pipefail \
+    && cp /usr/local/share/aclocal/*.m4 /usr/share/aclocal \
     && cp /usr/share/aclocal/*.m4 /usr/local/share/aclocal
 
 VOLUME /src
