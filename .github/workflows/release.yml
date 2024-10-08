@@ -12,6 +12,8 @@ on:
         - autoconf
         - devcontainer
 
+run-name: "Release: ${{ inputs.package }}"
+
 jobs:
   release-to-ghcr:
     concurrency:
