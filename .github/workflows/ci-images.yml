@@ -1,0 +1,72 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+        - main
+  pull_request:
+    branches:
+        - main
+
+jobs:
+  env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+#     - uses: actions/checkout@v4  # I dont think this is needed given git context defaults in build-push-action?
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v6
+      with:
+        file: ./cpython-ci/Dockerfile
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull Docker image
+      run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test
+
+    - name: Run tests
+      run: |
+        docker run ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test /usr/local/bin/test_pythons.py
+        docker run ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test tox --version
+        docker run ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test mypy --version
+        docker run ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test pipx --version
+
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Pull and re-tag Docker image
+      run: |
+        docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test
+        docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:active
+        docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-test ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+
+    - name: Push Docker images
+      run: |
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:active
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
