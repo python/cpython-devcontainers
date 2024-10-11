@@ -5,7 +5,7 @@ ARG AUTOCONF_ARCHIVE_VERSION="2023.02.20"
 ARG AUTOMAKE_VERSION="1.16.5"
 
 LABEL org.opencontainers.image.source="https://github.com/python/cpython-devcontainers"
-LABEL org.opencontainers.image.base.name="docker.io/library/alpine:3.19"
+LABEL org.opencontainers.image.base.name="docker.io/library/ubuntu:22.04"
 LABEL org.opencontainers.image.authors="Donghee Na"
 LABEL org.opencontainers.image.title="GNU Autoconf ${AUTOCONF_VERSION} container for CPython"
 LABEL org.opencontainers.image.description="Container image with GNU Autoconf ${AUTOCONF_VERSION}, GNU Automake ${AUTOMAKE_VERSION}, and autoconf-archive ${AUTOCONF_ARCHIVE_VERSION} for generating CPython's configure script."

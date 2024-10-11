@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+export CONFIG_SHELL="/usr/bin/bash"
+
 BIN=/usr/local/bin
 AUTOCONF=$BIN/autoconf
 AUTORECONF=$BIN/autoreconf
