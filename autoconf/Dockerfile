@@ -30,8 +30,12 @@ RUN curl https://ftp.gnu.org/gnu/automake/automake-${AUTOMAKE_VERSION}.tar.gz | 
     && ./configure --prefix=/usr/local \
     && make \
     && make install
-RUN curl https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-${AUTOCONF_ARCHIVE_VERSION}.tar.xz | xz -cd - | tar -xf - \
+# We can get rid of the ax_c_float_words_bigendian.m4 patch when a new version
+# of autoconf-archive is released.
+COPY ax_c_float_words_bigendian.diff .
+RUN PATCH_VERBOSE=1 curl https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-${AUTOCONF_ARCHIVE_VERSION}.tar.xz | xz -cd - | tar -xf - \
     && cd autoconf-archive-${AUTOCONF_ARCHIVE_VERSION} \
+    && patch -p1 -i ../ax_c_float_words_bigendian.diff \
     && ./configure --prefix=/usr/local \
     && make \
     && make install
