@@ -9,8 +9,12 @@ ENV WASMTIME_HOME=/opt/wasmtime
 ENV WASMTIME_VERSION=22.0.0
 ENV WASMTIME_CPU_ARCH=x86_64
 
-RUN dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 install /usr/bin/{blurb,clang,curl,git,ln,tar,xz} 'dnf5-command(builddep)' && \
-    dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 builddep python3 && \
+RUN dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 install \
+        /usr/bin/{blurb,clang,curl,git,ln,tar,xz} \
+        compiler-rt \
+        'dnf5-command(builddep)' && \
+    dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 \
+        builddep python3 && \
     dnf -y clean all
 
 RUN mkdir ${WASI_SDK_PATH} && \
