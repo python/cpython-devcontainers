@@ -1,4 +1,4 @@
-FROM docker.io/library/ubuntu:22.04
+FROM docker.io/library/ubuntu:24.04
 
 ARG AUTOCONF_VERSION="2.71"
 ARG AUTOCONF_ARCHIVE_VERSION="2023.02.20"
