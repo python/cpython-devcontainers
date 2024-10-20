@@ -17,6 +17,7 @@ RUN apt-get update && \
             autoconf-archive \
             build-essential \
             curl \
+            git \
             pkg-config
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
