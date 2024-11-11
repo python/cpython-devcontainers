@@ -58,7 +58,7 @@ index 216b90d8..52036844 100644
  #   warranty.
  
 -#serial 11
-+#serial 12
++#serial 14
  
  AC_DEFUN([AX_C_FLOAT_WORDS_BIGENDIAN],
    [AC_CACHE_CHECK(whether float word ordering is bigendian,
@@ -82,11 +82,11 @@ index 216b90d8..52036844 100644
  ]])], [
  
 -if grep noonsees conftest.$ac_objext >/dev/null ; then
-+if grep noonsees conftest$EXEEXT >/dev/null ; then
++if grep noonsees conftest* > /dev/null ; then
    ax_cv_c_float_words_bigendian=yes
  fi
 -if grep seesnoon conftest.$ac_objext >/dev/null ; then
-+if grep seesnoon conftest$EXEEXT >/dev/null ; then
++if grep seesnoon conftest* >/dev/null ; then
    if test "$ax_cv_c_float_words_bigendian" = unknown; then
      ax_cv_c_float_words_bigendian=no
    else
