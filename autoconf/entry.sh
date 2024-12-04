@@ -8,7 +8,9 @@ AUTOCONF=$BIN/autoconf
 AUTORECONF=$BIN/autoreconf
 
 if [ "$#" = "0" ]; then
-    SENTINEL=/src/pyconfig.h.in
+    # This is the same sentinel used for AC_CONFIG_SRCDIR in CPython's
+    # configure.ac.
+    SENTINEL=/src/Include/object.h
 
     if [ ! -e ${SENTINEL} ]; then
         echo "ERROR: ${SENTINEL} not found "
@@ -24,4 +26,3 @@ if [ "$#" = "0" ]; then
 fi
 
 exec "$@"
-
