@@ -1,0 +1,42 @@
+From bee7bb3310b356e99e3a0f75f23efbc97f1b0a24 Mon Sep 17 00:00:00 2001
+From: Russell Keith-Magee <russell@keith-magee.com>
+Date: Mon, 26 Feb 2024 09:21:10 +0800
+Subject: [PATCH] gh-114099: Add configure and Makefile targets to support iOS
+ compilation. (GH-115390)
+
+---
+ config.sub                                    | Bin 36846 -> 37009 bytes
+
+diff --git a/config.sub b/config.sub
+index 2c6a07ab3c3..1bb6a05dc11 100755
+--- a/config.sub
++++ b/config.sub
+@@ -4,6 +4,7 @@
+ 
+ # shellcheck disable=SC2006,SC2268 # see below for rationale
+ 
++# Patched 2024-02-03 to include support for arm64_32 and iOS/tvOS/watchOS simulators
+ timestamp='2024-01-01'
+ 
+ # This file is free software; you can redistribute it and/or modify it
+@@ -1127,7 +1128,7 @@ case $cpu-$vendor in
+ 	xscale-* | xscalee[bl]-*)
+ 		cpu=`echo "$cpu" | sed 's/^xscale/arm/'`
+ 		;;
+-	arm64-* | aarch64le-*)
++	arm64-* | aarch64le-* | arm64_32-*)
+ 		cpu=aarch64
+ 		;;
+ 
+@@ -1866,6 +1867,8 @@ case $kernel-$os-$obj in
+ 		;;
+ 	*-eabi*- | *-gnueabi*-)
+ 		;;
++	ios*-simulator- | tvos*-simulator- | watchos*-simulator- )
++		;;
+ 	none--*)
+ 		# None (no kernel, i.e. freestanding / bare metal),
+ 		# can be paired with an machine code file format
+-- 
+2.47.1
+
