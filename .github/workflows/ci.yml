@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        autoconf_version: ["2.69", "2.71", "2.72"]
+        autoconf_version: ["2.71", "2.72"]
     runs-on: ubuntu-latest
     env:
       TAG: autoconf:${{ matrix.autoconf_version }}-${{ github.run_id }}
