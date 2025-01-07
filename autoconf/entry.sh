@@ -22,6 +22,14 @@ if [ "$#" = "0" ]; then
     fi
 
     echo "Rebuilding configure script using $($AUTOCONF --version | head -n 1)"
+    set -x
+    # autoreconf's '--force' option doesn't affect any of the files installed
+    # by the '--install' option.  Remove the files to truly force them to be
+    # updated so that the CPython repo doesn't drift from this repo.
+    rm -f /src/aclocal.m4
+    rm -f /src/config.guess
+    rm -f /src/config.sub
+    rm -f /src/install-sh
     exec $AUTORECONF -ivf -Werror $@
 fi
 
