@@ -1,4 +1,4 @@
-From bee7bb3310b356e99e3a0f75f23efbc97f1b0a24 Mon Sep 17 00:00:00 2001
+From 7a7c6fc48512405ede8b2db440b702e866364b00 Mon Sep 17 00:00:00 2001
 From: Russell Keith-Magee <russell@keith-magee.com>
 Date: Mon, 26 Feb 2024 09:21:10 +0800
 Subject: [PATCH] config.sub: Include support for arm64_32 and iOS/tvOS/watchOS
@@ -25,22 +25,23 @@ The `-simulator` suffix is significant because iOS devices and iOS
 simulators have a different ABI.  It is therefore essential that these
 can be differentiated in a compiler triple.
 ---
- config.sub | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ config.sub | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/config.sub b/config.sub
-index 2c6a07a..1bb6a05 100755
+index 4aaae46..335706d 100755
 --- a/config.sub
 +++ b/config.sub
-@@ -4,6 +4,7 @@
+@@ -4,7 +4,7 @@
  
- # shellcheck disable=SC2006,SC2268 # see below for rationale
+ # shellcheck disable=SC2006,SC2268,SC2162 # see below for rationale
  
-+# Patched 2024-02-03 to include support for arm64_32 and iOS/tvOS/watchOS simulators
- timestamp='2024-01-01'
+-timestamp='2024-05-27'
++timestamp='2025-01-06'
  
  # This file is free software; you can redistribute it and/or modify it
-@@ -1127,7 +1128,7 @@ case $cpu-$vendor in
+ # under the terms of the GNU General Public License as published by
+@@ -1194,7 +1194,7 @@ case $cpu-$vendor in
  	xscale-* | xscalee[bl]-*)
  		cpu=`echo "$cpu" | sed 's/^xscale/arm/'`
  		;;
@@ -49,7 +50,7 @@ index 2c6a07a..1bb6a05 100755
  		cpu=aarch64
  		;;
  
-@@ -1866,6 +1867,8 @@ case $kernel-$os-$obj in
+@@ -2249,6 +2249,8 @@ case $kernel-$os-$obj in
  		;;
  	*-eabi*- | *-gnueabi*-)
  		;;
