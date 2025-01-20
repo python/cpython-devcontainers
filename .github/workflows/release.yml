@@ -93,12 +93,12 @@ jobs:
       - name: Set manifest
         run: |
           docker manifest create ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }} \
-              --amend ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 \
-              --amend ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 \
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
 
           docker manifest create ghcr.io/python/${{ inputs.package }}:latest \
-              --amend ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 \
-              --amend ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 \
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
 
           docker manifest push ghcr.io/python/${{ inputs.package }}:latest
           docker manifest push ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}
