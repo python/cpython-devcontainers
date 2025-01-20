@@ -22,7 +22,7 @@ jobs:
     if: contains('["brettcannon", "corona10", "erlend-aasland"]', github.actor)
     runs-on: ubuntu-latest
     outputs:
-      builddate: ${{ steps.version.outputs.version }}
+      builddate: ${{ steps.version.outputs.builddate }}
     steps:
       # Checkout push-to-registry action github repository
       - name: Set Calver Date
