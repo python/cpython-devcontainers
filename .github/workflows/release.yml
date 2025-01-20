@@ -90,23 +90,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Pull images
-        run: |
-          docker pull ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64
-          docker tag ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 ghcr.io/python/${{ inputs.package }}:amd64
-
-          docker pull ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
-          docker tag ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64 ghcr.io/python/${{ inputs.package }}:arm64
-
       - name: Set manifest
         run: |
           docker manifest create ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }} \
-              ghcr.io/python/${{ inputs.package }}:amd64 \
-              ghcr.io/python/${{ inputs.package }}:arm64
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 \
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
 
           docker manifest create ghcr.io/python/${{ inputs.package }}:latest \
-              ghcr.io/python/${{ inputs.package }}:amd64 \
-              ghcr.io/python/${{ inputs.package }}:arm64
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-amd64 \
+              ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}-arm64
 
           docker manifest push ghcr.io/python/${{ inputs.package }}:latest
           docker manifest push ghcr.io/python/${{ inputs.package }}:${{ needs.generate-version.outputs.builddate }}.${{ github.run_id }}
