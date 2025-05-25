@@ -12,6 +12,8 @@ ENV WASMTIME_CPU_ARCH=x86_64
 RUN dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 install \
         /usr/bin/{blurb,clang,curl,git,ln,tar,xz} \
         compiler-rt \
+        # TODO: remove when Fedora version includes Python 3.14+
+        libzstd-devel \
         'dnf5-command(builddep)' && \
     dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 \
         builddep python3 && \
