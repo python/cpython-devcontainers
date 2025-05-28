@@ -16,6 +16,7 @@ RUN dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-
     dnf -y clean all
 
 
+# Update only after consulting with WASI support maintainers (see PEP 11).
 ENV WASI_SDK_VERSION=24
 ENV WASI_SDK_PATH=/opt/wasi-sdk
 
@@ -29,8 +30,9 @@ RUN mkdir ${WASI_SDK_PATH} && \
     tar --strip-components 1 --directory ${WASI_SDK_PATH} --extract --gunzip
 
 
-ENV WASMTIME_HOME=/opt/wasmtime
+# Update as desired.
 ENV WASMTIME_VERSION=33.0.0
+ENV WASMTIME_HOME=/opt/wasmtime
 
 RUN mkdir --parents ${WASMTIME_HOME} && \
     case "${TARGETARCH}" in \
