@@ -9,8 +9,12 @@ on:
 
 jobs:
   build_devcontainer:
-    name: Build (Devcontainer)
-    runs-on: ubuntu-latest
+    name: Build and test (Devcontainer)
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
     env:
       TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
     steps:
@@ -24,6 +28,10 @@ jobs:
           context: ./devcontainer
           load: true
           tags: ${{ env.TAG }}
+      - name: Test WASI SDK
+        run: docker run --rm ${{ env.TAG }} /opt/wasi-sdk/bin/clang --version
+      - name: Test Wasmtime
+        run: docker run --rm ${{ env.TAG }} /usr/local/bin/wasmtime --version
 
   build_autoconf:
     name: Build and test (Autoconf)
