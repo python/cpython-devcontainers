@@ -31,7 +31,7 @@ jobs:
       - name: Test WASI SDK
         run: docker run --rm ${{ env.TAG }} /opt/wasi-sdk/bin/clang --version
       - name: Test Wasmtime
-        run: docker run --rm ${{ env.TAG }} /usr/local/bin/wasmtime --version
+        run: docker run --rm ${{ env.TAG }} wasmtime --version
 
   build_autoconf:
     name: Build and test (Autoconf)
