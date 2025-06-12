@@ -2,47 +2,22 @@ FROM docker.io/library/fedora:41
 
 ARG TARGETARCH
 
-
 ENV CC=clang
 
-RUN dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 install \
-        /usr/bin/{blurb,clang,curl,git,ln,tar,xz} \
-        compiler-rt \
-        # TODO: remove when Fedora version includes Python 3.14+
-        libzstd-devel \
-        'dnf5-command(builddep)' && \
-    dnf -y --nodocs --setopt=install_weak_deps=False --disablerepo=fedora-cisco-openh264 \
-        builddep python3 && \
-    dnf -y clean all
-
+# Remove a video codec repository to speed up installs
+RUN dnf config-manager setopt fedora-cisco-openh264.enabled=False
 
 # Update only after consulting with WASI support maintainers (see PEP 11).
 ENV WASI_SDK_VERSION=24
 ENV WASI_SDK_PATH=/opt/wasi-sdk
 
-RUN mkdir ${WASI_SDK_PATH} && \
-    case "${TARGETARCH}" in \
-        amd64) WASI_ARCH="x86_64" ;; \
-        arm64) WASI_ARCH="arm64" ;; \
-        *) echo "Unsupported TARGETARCH: ${TARGETARCH}" && exit 1 ;; \
-    esac && \
-    curl --location https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${WASI_SDK_VERSION}/wasi-sdk-${WASI_SDK_VERSION}.0-${WASI_ARCH}-linux.tar.gz | \
-    tar --strip-components 1 --directory ${WASI_SDK_PATH} --extract --gunzip
-
-
 # Update as desired.
 ENV WASMTIME_VERSION=33.0.0
 ENV WASMTIME_HOME=/opt/wasmtime
 
-RUN mkdir --parents ${WASMTIME_HOME} && \
-    case "${TARGETARCH}" in \
-        amd64) WASMTIME_ARCH="x86_64" ;; \
-        arm64) WASMTIME_ARCH="aarch64" ;; \
-        *) echo "Unsupported TARGETARCH: ${TARGETARCH}" && exit 1 ;; \
-    esac && \
-    curl --location "https://github.com/bytecodealliance/wasmtime/releases/download/v${WASMTIME_VERSION}/wasmtime-v${WASMTIME_VERSION}-${WASMTIME_ARCH}-linux.tar.xz" | \
-    xz --decompress | \
-    tar --strip-components 1 --directory ${WASMTIME_HOME} -x && \
-    ln -s ${WASMTIME_HOME}/wasmtime /usr/local/bin
 
+RUN mkdir -p /opt/cpython-devcontainer/bin
+COPY --chmod=755 install-builddeps.sh install-wasi.sh /opt/cpython-devcontainer/bin/
 
+RUN /opt/cpython-devcontainer/bin/install-builddeps.sh
+RUN /opt/cpython-devcontainer/bin/install-wasi.sh
