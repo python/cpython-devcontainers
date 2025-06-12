@@ -18,7 +18,6 @@ ENV WASMTIME_HOME=/opt/wasmtime
 
 RUN mkdir -p /opt/cpython-devcontainer/bin
 COPY --chmod=755 install-builddeps.sh install-wasi.sh /opt/cpython-devcontainer/bin/
-RUN chmod +x /opt/cpython-devcontainer/bin/install-*.sh
 
 RUN /opt/cpython-devcontainer/bin/install-builddeps.sh
 RUN /opt/cpython-devcontainer/bin/install-wasi.sh
