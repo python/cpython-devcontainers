@@ -17,7 +17,7 @@ DEPS=(
     bash-color-prompt
 
     # Common tools
-    /usr/bin/{curl,grep,less,ln,lsof,man-db,rg,which}
+    /usr/bin/{curl,grep,less,ln,lsof,man,rg,which}
 
     # Compression
     /usr/bin/{tar,xz,zip}
