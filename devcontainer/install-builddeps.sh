@@ -5,8 +5,27 @@
 
 # Define dependencies as an array, for easier formatting & comments.
 # see: https://www.gnu.org/software/bash/manual/html_node/Arrays.html
+# Contents inspired by experience and
+# https://github.com/devcontainers/features/tree/main/src/common-utils .
 DEPS=(
-    /usr/bin/{blurb,clang,curl,git,ln,tar,xz}
+    # Bare minimum
+    /usr/bin/{blurb,clang,git}
+
+    # Shell niceties
+    /usr/bin/{fish,zsh}
+    bash-completion
+    bash-color-prompt
+
+    # Common tools
+    /usr/bin/{curl,grep,less,ln,lsof,man-db,rg,which}
+
+    # Compression
+    /usr/bin/{tar,xz,zip}
+
+    # Editors
+    /usr/bin/{emacs,vim}
+
+    # Necessary for getting Python build dependencies
     'dnf5-command(builddep)'
 
     # LLVM sanitizer runtimes
