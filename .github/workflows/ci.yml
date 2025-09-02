@@ -19,7 +19,7 @@ jobs:
       TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
     steps:
       - name: Checkout Push to Registry action
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build Dockerfile
@@ -45,7 +45,7 @@ jobs:
       TAG: autoconf:${{ matrix.autoconf_version }}-${{ github.run_id }}
     steps:
       - name: Checkout Push to Registry action
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build Dockerfile
