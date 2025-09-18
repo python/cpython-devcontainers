@@ -10,6 +10,7 @@ on:
         type: choice
         options:
         - autoconf
+        - buildcontainer
         - devcontainer
 
 run-name: "Release: ${{ inputs.package }}"
