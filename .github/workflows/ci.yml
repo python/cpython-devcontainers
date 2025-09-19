@@ -34,7 +34,7 @@ jobs:
         run: docker run --rm ${{ env.TAG }} wasmtime --version
 
   build_wasi_container:
-    name: Build and test (Devcontainer)
+    name: Build and test (WASI container)
     strategy:
       fail-fast: false
       matrix:
