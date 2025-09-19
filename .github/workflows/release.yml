@@ -11,6 +11,7 @@ on:
         options:
         - autoconf
         - devcontainer
+        - wasicontainer
 
 run-name: "Release: ${{ inputs.package }}"
 
