@@ -1,6 +1,6 @@
 FROM ghcr.io/python/devcontainer:latest
 
-LABEL org.opencontainers.image.base.name="ghcr.io/python/devcontainer:latest"
+LABEL org.opencontainers.image.base.name="ghcr.io/python/wasicontainer:latest"
 LABEL org.opencontainers.image.source="https://github.com/python/cpython-devcontainers"
 LABEL org.opencontainers.image.title="CPython WASI development container"
 LABEL org.opencontainers.image.description="CPython development container with the tooling to work on WASI builds."
