@@ -23,7 +23,7 @@ for VERSION in "${WASI_SDK_VERSIONS[@]}"; do
     curl --location $URL | tar --directory ${WASI_SDK_ROOT} --extract --gunzip
 done
 
-# For Python 3.13 as Tools/wasm/wasi.py expects /opt/wasi-sdk.
+# For Python 3.13 as Tools/wasm/wasi.py expects /opt/wasi-sdk by default.
 ln -s ${WASI_SDK_ROOT}/wasi-sdk-24.0*/ /opt/wasi-sdk
 
 
@@ -41,4 +41,5 @@ curl --location $URL |
     xz --decompress |
     tar --strip-components 1 --directory ${WASMTIME_HOME} -x
 
-ln -s ${WASMTIME_HOME} /usr/local/bin
+# Put `wasmtime` on $PATH.
+ln -s ${WASMTIME_HOME}/wasmtime* /usr/local/bin
