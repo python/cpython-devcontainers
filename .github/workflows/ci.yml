@@ -19,7 +19,7 @@ jobs:
       # Dummy tag; version does not matter.
       TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
     steps:
-      - name: Checkout Push to Registry action
+      - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -42,7 +42,7 @@ jobs:
     env:
       TAG: cpython-wasicontainer:1.0.0-${{ github.run_id }}
     steps:
-      - name: Checkout Push to Registry action
+      - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -68,7 +68,7 @@ jobs:
     env:
       TAG: autoconf:${{ matrix.autoconf_version }}-${{ github.run_id }}
     steps:
-      - name: Checkout Push to Registry action
+      - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
