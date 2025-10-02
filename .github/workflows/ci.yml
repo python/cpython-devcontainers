@@ -8,14 +8,15 @@ on:
     branches: [main]
 
 jobs:
-  build_devcontainer:
-    name: Build and test (Devcontainer)
+  build_dev_container:
+    name: Build and test (Dev container)
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     env:
+      # Dummy tag; version does not matter.
       TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
     steps:
       - name: Checkout Push to Registry action
@@ -28,10 +29,8 @@ jobs:
           context: ./devcontainer
           load: true
           tags: ${{ env.TAG }}
-      - name: Test WASI SDK
-        run: docker run --rm ${{ env.TAG }} /opt/wasi-sdk/bin/clang --version
-      - name: Test Wasmtime
-        run: docker run --rm ${{ env.TAG }} wasmtime --version
+      - name: Test clang
+        run: docker run --rm ${{ env.TAG }} clang --version
 
   build_wasi_container:
     name: Build and test (WASI container)
