@@ -19,7 +19,7 @@ jobs:
       # Dummy tag; version does not matter.
       TAG: cpython-devcontainer:1.0.0-${{ github.run_id }}
     steps:
-      - name: Checkout Push to Registry action
+      - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -32,6 +32,31 @@ jobs:
       - name: Test clang
         run: docker run --rm ${{ env.TAG }} clang --version
 
+  build_wasi_container:
+    name: Build and test (WASI container)
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    env:
+      TAG: cpython-wasicontainer:1.0.0-${{ github.run_id }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Dockerfile
+        uses: docker/build-push-action@v6
+        with:
+          context: ./wasicontainer
+          load: true
+          tags: ${{ env.TAG }}
+      - name: Test WASI SDK
+        run: docker run --rm ${{ env.TAG }} /opt/wasi-sdk/bin/clang --version
+      - name: Test Wasmtime
+        run: docker run --rm ${{ env.TAG }} wasmtime --version
+
   build_autoconf:
     name: Build and test (Autoconf)
     strategy:
@@ -43,7 +68,7 @@ jobs:
     env:
       TAG: autoconf:${{ matrix.autoconf_version }}-${{ github.run_id }}
     steps:
-      - name: Checkout Push to Registry action
+      - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
