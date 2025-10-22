@@ -11,7 +11,7 @@ ARG TARGETARCH
 # WASI SDK versions are controlled in install-wasi.sh.
 ENV WASI_SDK_ROOT=/opt
 
-ENV WASMTIME_VERSION=36.0.2
+ENV WASMTIME_VERSION=38.0.2
 ENV WASMTIME_HOME=/opt/wasmtime
 
 RUN mkdir -p /opt/cpython-devcontainer/bin
