@@ -32,8 +32,9 @@ jobs:
     with:
       container: ${{ inputs.container }}
 
+  # Explicit WASI container release **if** the dev container was also released due to being a dependency.
   release-wasicontainer:
-    name: Release wasicontainer (due to devcontainer updates)
+    name: Release wasicontainer
     needs: [authorize, release-to-ghcr]
     if: inputs.container == 'devcontainer'
     uses: ./.github/workflows/build-and-push.yml
