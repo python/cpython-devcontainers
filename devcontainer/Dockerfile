@@ -5,6 +5,9 @@ LABEL org.opencontainers.image.source="https://github.com/python/cpython-devcont
 LABEL org.opencontainers.image.title="CPython development container"
 LABEL org.opencontainers.image.description="CPython development container with the tooling to work on Linux builds."
 LABEL org.opencontainers.image.authors="Brett Cannon"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.url="https://github.com/python/cpython-devcontainers"
+LABEL org.opencontainers.image.documentation="https://github.com/python/cpython-devcontainers/blob/main/devcontainer/README.md"
 
 ENV CC=clang
 

@@ -21,6 +21,7 @@ jobs:
       - name: Set Calver Date
         run: |
           echo "builddate=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
+          echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
         id: version
       - name: Checkout
         uses: actions/checkout@v5
@@ -34,6 +35,61 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract labels from Dockerfile
+        id: labels
+        run: |
+          set -euo pipefail
+
+          # Extract labels from the Dockerfile.
+          DOCKERFILE=./${{ inputs.container }}/Dockerfile
+
+          # Function to extract a label value.
+          extract_label() {
+            local label_key="$1"
+            grep "org.opencontainers.image.${label_key}=" "$DOCKERFILE" | \
+              sed -n 's/.*org\.opencontainers\.image\.'"${label_key}"'="\([^"]*\)".*/\1/p' | \
+              head -n1 || echo ''
+          }
+
+          # Function to add annotation if value is non-empty.
+          add_annotation() {
+            local key="$1"
+            local value="$2"
+            if [ -n "$value" ]; then
+              [ -n "$annotations" ] && annotations="$annotations,"
+              annotations="${annotations}annotation-index.org.opencontainers.image.${key}=${value}"
+            fi
+          }
+
+          # Extract static labels from Dockerfile.
+          source=$(extract_label "source")
+          description=$(extract_label "description")
+          title=$(extract_label "title")
+          authors=$(extract_label "authors")
+          base_name=$(extract_label "base.name")
+          licenses=$(extract_label "licenses")
+          url=$(extract_label "url")
+          documentation=$(extract_label "documentation")
+
+          # Get dynamic values from earlier steps.
+          created="${{ steps.version.outputs.created }}"
+          revision="${{ github.sha }}"
+
+          # Build annotations string.
+          annotations=""
+          add_annotation "source" "$source"
+          add_annotation "description" "$description"
+          add_annotation "title" "$title"
+          add_annotation "authors" "$authors"
+          add_annotation "base.name" "$base_name"
+          add_annotation "licenses" "$licenses"
+          add_annotation "url" "$url"
+          add_annotation "documentation" "$documentation"
+          add_annotation "created" "$created"
+          add_annotation "revision" "$revision"
+
+          # Output the complete annotations string.
+          echo "annotations=$annotations" >> $GITHUB_OUTPUT
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -43,3 +99,4 @@ jobs:
           tags: |
             ghcr.io/python/${{ inputs.container }}:${{ steps.version.outputs.builddate }}.${{ github.run_id }}
             ghcr.io/python/${{ inputs.container }}:latest
+          outputs: type=image,name=ghcr.io/python/${{ inputs.container }},${{ steps.labels.outputs.annotations }}
