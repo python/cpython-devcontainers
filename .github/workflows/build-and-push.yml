@@ -35,6 +35,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # Extract labels from the Dockerfile to use as OCI annotations.
+      # This allows them to show up on the webpages for the containers on GHCR due to using
+      # multi-arch images
+      # (as documented at
+      # https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images
+      # ).
+      # The pre-defined annotations by the OCI that you can add to a manifest can be found at
+      # https://specs.opencontainers.org/image-spec/annotations/#pre-defined-annotation-keys
       - name: Extract labels from Dockerfile
         id: labels
         run: |
