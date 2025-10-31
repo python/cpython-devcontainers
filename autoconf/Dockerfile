@@ -8,10 +8,13 @@ ARG AUTOMAKE_VERSION="1.16.5"
 ARG CONFIG_GIT_REV="00b15927496058d23e6258a28d8996f87cf1f191"
 
 LABEL org.opencontainers.image.source="https://github.com/python/cpython-devcontainers"
-LABEL org.opencontainers.image.base.name="docker.io/library/ubuntu:22.04"
+LABEL org.opencontainers.image.base.name="docker.io/library/ubuntu:24.04"
 LABEL org.opencontainers.image.authors="Donghee Na"
 LABEL org.opencontainers.image.title="GNU Autoconf ${AUTOCONF_VERSION} container for CPython"
 LABEL org.opencontainers.image.description="Container image with GNU Autoconf ${AUTOCONF_VERSION}, GNU Automake ${AUTOMAKE_VERSION}, and autoconf-archive ${AUTOCONF_ARCHIVE_VERSION} for generating CPython's configure script."
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.url="https://github.com/python/cpython-devcontainers"
+LABEL org.opencontainers.image.documentation="https://github.com/python/cpython-devcontainers/blob/main/autoconf/README.md"
 
 RUN apt-get update && \
     apt-get install -yq \
