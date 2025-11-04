@@ -1,6 +1,6 @@
-FROM docker.io/library/fedora:42
+FROM docker.io/library/fedora:43
 
-LABEL org.opencontainers.image.base.name="docker.io/library/fedora:42"
+LABEL org.opencontainers.image.base.name="docker.io/library/fedora:43"
 LABEL org.opencontainers.image.source="https://github.com/python/cpython-devcontainers"
 LABEL org.opencontainers.image.title="CPython development container"
 LABEL org.opencontainers.image.description="CPython development container with the tooling to work on Linux builds."
