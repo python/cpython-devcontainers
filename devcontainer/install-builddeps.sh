@@ -30,9 +30,6 @@ DEPS=(
 
     # LLVM sanitizer runtimes
     compiler-rt
-
-    # TODO: remove when Fedora version includes Python 3.14
-    libzstd-devel
 )
 
 dnf -y --nodocs --setopt=install_weak_deps=False install ${DEPS[@]}
