@@ -7,7 +7,7 @@ WASI_SDK_VERSIONS=(
 )
 WASMTIME_VERSION="38.0.4"
 
-ENV WASI_SDK_ROOT=/opt
+WASI_SDK_ROOT=/opt
 
 mkdir --parents ${WASI_SDK_ROOT}
 
