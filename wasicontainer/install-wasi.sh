@@ -15,11 +15,12 @@ case "${TARGETARCH}" in
     *) echo "Unsupported TARGETARCH: ${TARGETARCH}" && exit 1 ;;
 esac && \
 
-# 24: 3.13, 3.14
-# 25: 3.15
-# The URL format only works for WASI SDK >= 23.
-WASI_SDK_VERSIONS=(24 25)
+WASI_SDK_VERSIONS=(
+    24  # 3.13, 3.14
+    29  # 3.15
+)
 for VERSION in "${WASI_SDK_VERSIONS[@]}"; do
+    # The URL format only works for WASI SDK >= 23.
     URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${VERSION}/wasi-sdk-${VERSION}.0-${WASI_ARCH}-linux.tar.gz
     curl --location $URL | tar --directory ${WASI_SDK_ROOT} --extract --gunzip
 done
