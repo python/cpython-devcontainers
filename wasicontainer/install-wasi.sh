@@ -14,7 +14,7 @@ mkdir --parents ${WASI_SDK_ROOT}
 # For 3.11, 3.12.
 # There is no Arm support for WASI SDK < 23.
 if [ "${TARGETARCH}" = "amd64" ]; then
-    URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-16/wasi-sdk-21.0-linux.tar.gz
+    URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-21/wasi-sdk-21.0-linux.tar.gz
     curl --location $URL | tar --directory ${WASI_SDK_ROOT} --extract --gunzip
 fi
 
