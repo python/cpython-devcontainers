@@ -1,11 +1,11 @@
 #! /bin/bash -ex
 
 WASI_SDK_VERSIONS=(
-    # 16 for 3.11 & 3.12 is special-cased below.
+    # 21 for 3.11 & 3.12 is special-cased below.
     24  # 3.13 (w/ special symlinking below), 3.14
     29  # 3.15
 )
-WASMTIME_VERSION="38.0.4"
+WASMTIME_VERSION="39.0.1"
 
 WASI_SDK_ROOT=/opt
 
@@ -14,7 +14,7 @@ mkdir --parents ${WASI_SDK_ROOT}
 # For 3.11, 3.12.
 # There is no Arm support for WASI SDK < 23.
 if [ "${TARGETARCH}" = "amd64" ]; then
-    URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-16/wasi-sdk-16.0-linux.tar.gz
+    URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-16/wasi-sdk-21.0-linux.tar.gz
     curl --location $URL | tar --directory ${WASI_SDK_ROOT} --extract --gunzip
 fi
 
