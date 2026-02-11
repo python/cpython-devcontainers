@@ -13,8 +13,6 @@ on:
         - devcontainer
         - wasicontainer
 
-run-name: "Release: ${{ inputs.container }}${{ inputs.container == 'devcontainer' && ' + wasicontainer' || '' }}"
-
 jobs:
   authorize:
     runs-on: ubuntu-latest
@@ -34,7 +32,7 @@ jobs:
 
   # Explicit WASI container release **if** the dev container was also released due to being a dependency.
   release-wasicontainer:
-    name: Release wasicontainer
+    name: Release dependent wasicontainer
     needs: [authorize, release-to-ghcr]
     if: inputs.container == 'devcontainer'
     uses: ./.github/workflows/build-and-push.yml
