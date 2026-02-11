@@ -13,6 +13,8 @@ on:
         - devcontainer
         - wasicontainer
 
+run-name: "Release: ${{ inputs.container }}${{ inputs.container == 'devcontainer' && ' + wasicontainer' || '' }}"
+
 jobs:
   authorize:
     runs-on: ubuntu-latest
