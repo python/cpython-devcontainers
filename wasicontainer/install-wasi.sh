@@ -1,11 +1,13 @@
 #! /bin/bash -ex
 
+# https://github.com/WebAssembly/wasi-sdk/releases
 WASI_SDK_VERSIONS=(
     # 21 for 3.11 & 3.12 is special-cased below.
     24  # 3.13 (w/ special symlinking below), 3.14
-    29  # 3.15
+    30  # 3.15
 )
-WASMTIME_VERSION="39.0.1"
+# https://github.com/bytecodealliance/wasmtime/releases
+WASMTIME_VERSION="41.0.3"
 
 WASI_SDK_ROOT=/opt
 
