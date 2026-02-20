@@ -25,6 +25,9 @@ DEPS=(
     # Editors
     /usr/bin/{emacs,vim}
 
+    # Tooling dependencies
+    /usr/bin/node
+
     # Necessary for getting Python build dependencies
     'dnf5-command(builddep)'
 
