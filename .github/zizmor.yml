@@ -1,0 +1,10 @@
+# Configuration for the zizmor static analysis tool, run via prek in CI
+# https://woodruffw.github.io/zizmor/configuration/
+rules:
+  template-injection:
+    ignore:
+      - build-and-push.yml:108
+  unpinned-uses:
+    config:
+      policies:
+        "*": ref-pin

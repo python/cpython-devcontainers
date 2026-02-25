@@ -15,10 +15,12 @@ on:
 
 run-name: "Release: ${{ inputs.container }}${{ inputs.container == 'devcontainer' && ' + wasicontainer' || '' }}"
 
+permissions: {}
+
 jobs:
   authorize:
     runs-on: ubuntu-latest
-    if: contains('["brettcannon", "corona10", "erlend-aasland"]', github.actor)
+    if: contains(fromJSON('["brettcannon", "corona10", "erlend-aasland"]'), github.actor)
     steps:
       - run: echo "Authorized"
 

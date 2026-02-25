@@ -17,14 +17,18 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      CONTAINER: ${{ inputs.container }}
     steps:
       - name: Set Calver Date
         run: |
-          echo "builddate=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
-          echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          echo "builddate=$(date +'%Y.%m.%d')" >> "$GITHUB_OUTPUT"
+          echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
         id: version
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -45,11 +49,13 @@ jobs:
       # https://specs.opencontainers.org/image-spec/annotations/#pre-defined-annotation-keys
       - name: Extract labels from Dockerfile
         id: labels
+        env:
+          CREATED: ${{ steps.version.outputs.created }}
         run: |
           set -euo pipefail
 
           # Extract labels from the Dockerfile.
-          DOCKERFILE=./${{ inputs.container }}/Dockerfile
+          DOCKERFILE="./${CONTAINER}/Dockerfile"
 
           # Function to extract a label value.
           extract_label() {
@@ -80,8 +86,8 @@ jobs:
           documentation=$(extract_label "documentation")
 
           # Get dynamic values from earlier steps.
-          created="${{ steps.version.outputs.created }}"
-          revision="${{ github.sha }}"
+          created="$CREATED"
+          revision="$GITHUB_SHA"
 
           # Build annotations string.
           annotations=""
@@ -97,11 +103,11 @@ jobs:
           add_annotation "revision" "$revision"
 
           # Output the complete annotations string.
-          echo "annotations=$annotations" >> $GITHUB_OUTPUT
+          echo "annotations=$annotations" >> "$GITHUB_OUTPUT"
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./${{ inputs.container }}
+          context: ./${{ env.CONTAINER }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
