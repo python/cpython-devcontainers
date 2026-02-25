@@ -1,0 +1,7 @@
+# Configuration for the zizmor static analysis tool, run via prek in CI
+# https://woodruffw.github.io/zizmor/configuration/
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "*": ref-pin
