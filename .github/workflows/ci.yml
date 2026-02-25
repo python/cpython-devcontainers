@@ -34,7 +34,7 @@ jobs:
           load: true
           tags: ${{ env.TAG }}
       - name: Test clang
-        run: docker run --rm ${{ env.TAG }} clang --version
+        run: docker run --rm "$TAG" clang --version
 
   build_wasi_container:
     name: Build and test (WASI container)
@@ -59,9 +59,9 @@ jobs:
           load: true
           tags: ${{ env.TAG }}
       - name: Test WASI SDK
-        run: docker run --rm ${{ env.TAG }} /opt/wasi-sdk/bin/clang --version
+        run: docker run --rm "$TAG" /opt/wasi-sdk/bin/clang --version
       - name: Test Wasmtime
-        run: docker run --rm ${{ env.TAG }} wasmtime --version
+        run: docker run --rm "$TAG" wasmtime --version
 
   build_autoconf:
     name: Build and test (Autoconf)

@@ -49,6 +49,8 @@ jobs:
       # https://specs.opencontainers.org/image-spec/annotations/#pre-defined-annotation-keys
       - name: Extract labels from Dockerfile
         id: labels
+        env:
+          CREATED: ${{ steps.version.outputs.created }}
         run: |
           set -euo pipefail
 
@@ -84,8 +86,8 @@ jobs:
           documentation=$(extract_label "documentation")
 
           # Get dynamic values from earlier steps.
-          created="${{ steps.version.outputs.created }}"
-          revision="${{ github.sha }}"
+          created="$CREATED"
+          revision="$GITHUB_SHA"
 
           # Build annotations string.
           annotations=""
