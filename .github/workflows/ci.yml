@@ -88,4 +88,4 @@ jobs:
           load: true
           tags: ${{ env.TAG }}
       - name: Test
-        run: docker run --rm $TAG autoconf --version | grep ${{ matrix.autoconf_version }}
+        run: docker run --rm "$TAG" autoconf --version | grep ${{ matrix.autoconf_version }}

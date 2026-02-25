@@ -1,4 +1,26 @@
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: forbid-submodules
+      - id: trailing-whitespace
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.36.2
+    hooks:
+      - id: check-dependabot
+      - id: check-github-workflows
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.11
+    hooks:
+      - id: actionlint
+
   - repo: https://github.com/woodruffw/zizmor-pre-commit
     rev: v1.22.0
     hooks:

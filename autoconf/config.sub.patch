@@ -33,12 +33,12 @@ index 4aaae46..335706d 100755
 --- a/config.sub
 +++ b/config.sub
 @@ -4,7 +4,7 @@
- 
+
  # shellcheck disable=SC2006,SC2268,SC2162 # see below for rationale
- 
+
 -timestamp='2024-05-27'
 +timestamp='2025-01-06'
- 
+
  # This file is free software; you can redistribute it and/or modify it
  # under the terms of the GNU General Public License as published by
 @@ -1194,7 +1194,7 @@ case $cpu-$vendor in
@@ -49,7 +49,7 @@ index 4aaae46..335706d 100755
 +	arm64-* | aarch64le-* | arm64_32-*)
  		cpu=aarch64
  		;;
- 
+
 @@ -2249,6 +2249,8 @@ case $kernel-$os-$obj in
  		;;
  	*-eabi*- | *-gnueabi*-)
@@ -59,6 +59,5 @@ index 4aaae46..335706d 100755
  	none--*)
  		# None (no kernel, i.e. freestanding / bare metal),
  		# can be paired with an machine code file format
--- 
+--
 2.47.1
-

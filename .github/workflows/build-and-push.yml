@@ -22,8 +22,8 @@ jobs:
     steps:
       - name: Set Calver Date
         run: |
-          echo "builddate=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
-          echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          echo "builddate=$(date +'%Y.%m.%d')" >> "$GITHUB_OUTPUT"
+          echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
         id: version
       - name: Checkout
         uses: actions/checkout@v6
@@ -103,7 +103,7 @@ jobs:
           add_annotation "revision" "$revision"
 
           # Output the complete annotations string.
-          echo "annotations=$annotations" >> $GITHUB_OUTPUT
+          echo "annotations=$annotations" >> "$GITHUB_OUTPUT"
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
