@@ -17,6 +17,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      CONTAINER: ${{ inputs.container }}
     steps:
       - name: Set Calver Date
         run: |
@@ -49,7 +51,7 @@ jobs:
           set -euo pipefail
 
           # Extract labels from the Dockerfile.
-          DOCKERFILE=./${{ inputs.container }}/Dockerfile
+          DOCKERFILE="./${CONTAINER}/Dockerfile"
 
           # Function to extract a label value.
           extract_label() {
@@ -101,7 +103,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./${{ inputs.container }}
+          context: ./${{ env.CONTAINER }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
