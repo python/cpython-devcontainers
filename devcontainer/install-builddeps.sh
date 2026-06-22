@@ -31,8 +31,8 @@ DEPS=(
     # Necessary for getting Python build dependencies
     'dnf5-command(builddep)'
 
-    # LLVM sanitizer runtimes
-    compiler-rt
+    # LLVM sanitizer runtimes. CPython JIT compiler requires LLVM 21.
+    compiler-rt21
 )
 
 dnf -y --nodocs --setopt=install_weak_deps=False install ${DEPS[@]}
