@@ -5,9 +5,10 @@ WASI_SDK_VERSIONS=(
     # 21 for 3.11 & 3.12 is special-cased below.
     24  # 3.13 (w/ special symlinking below), 3.14
     33  # 3.15
+    34  # 3.16
 )
 # https://github.com/bytecodealliance/wasmtime/releases
-WASMTIME_VERSION="41.0.3"
+WASMTIME_VERSION="48.0.2"
 
 WASI_SDK_ROOT=/opt
 
